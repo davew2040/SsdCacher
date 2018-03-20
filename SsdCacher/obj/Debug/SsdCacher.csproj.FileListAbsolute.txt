@@ -1,0 +1,17 @@
+H:\Dev\SsdCacher\SsdCacher\bin\Debug\SsdCacher.exe.config
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\SsdCacher.csprojResolveAssemblyReference.cache
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\MainWindow.g.cs
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\App.g.cs
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\SsdCacher_MarkupCompile.cache
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\SsdCacher_MarkupCompile.lref
+H:\Dev\SsdCacher\SsdCacher\bin\Debug\SsdCacher.exe
+H:\Dev\SsdCacher\SsdCacher\bin\Debug\SsdCacher.pdb
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\MainWindow.baml
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\SsdCacher.g.resources
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\SsdCacher.Properties.Resources.resources
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\SsdCacher.csproj.GenerateResource.Cache
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\SsdCacher.exe
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\SsdCacher.pdb
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\GeneratedInternalTypeHelper.g.cs
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\Code\Dialogs\AddEditGameWindow.g.cs
+H:\Dev\SsdCacher\SsdCacher\obj\Debug\Code\Dialogs\AddEditGameWindow.baml

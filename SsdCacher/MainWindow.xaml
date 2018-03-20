@@ -1,0 +1,108 @@
+﻿<Window x:Class="SsdCacher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SsdCacher"
+        xmlns:valueconverters="clr-namespace:SsdCacher.Code.ValueConverters"
+        xmlns:validationrules="clr-namespace:SsdCacher.Code.ValidationRules"
+        mc:Ignorable="d"
+        x:Name="mainWindow"
+        Title="SSD Cacher" Height="600" Width="800"
+        DataContext="{Binding ElementName=mainWindow, Path=AppViewModel}">
+
+    <Window.Resources>
+        <valueconverters:CachedLabelConverter x:Key="CachedLabelConverter"/>
+        <valueconverters:CachedBackgroundColorConverter x:Key="CachedBackgroundColorConverter"/>
+        <valueconverters:BoolInversionConverter x:Key="BoolInversionConverter"/>
+        <valueconverters:CanCacheConverter x:Key="CanCacheConverter"/>
+        <valueconverters:CanUncacheConverter x:Key="CanUncacheConverter"/>
+        <valueconverters:NotNullBooleanConverter x:Key="NotNullBooleanConverter"/>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                <Label Content="SSD Path:"/>
+                <TextBox Margin="10,3,0,5" Width="300" Height="20">
+                    <TextBox.Text>
+                        <Binding Path="SsdPath">
+                            <Binding.ValidationRules>
+                                <validationrules:ValidateSsdPath/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Button x:Name="btn_findSsdPath" Click="btn_findSsdPath_Click" Margin="10,5" Width="35">Find</Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <DataGrid 
+                Margin="0,10" 
+                ItemsSource="{Binding GameEntries}" 
+                Background="LightGray" 
+                RowBackground="LightYellow" 
+                AlternatingRowBackground="LightBlue"
+                AutoGenerateColumns="False"
+                IsReadOnly="True"
+                SelectedItem="{Binding SelectedGameEntry, Mode=TwoWay}">
+                
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Cache" Click="Cache_Click" >
+                            <MenuItem.IsEnabled>
+                                <MultiBinding Converter="{StaticResource CanCacheConverter}">
+                                    <Binding Path="IsBusy" />
+                                    <Binding Path="SelectedGameEntry" />
+                                    <Binding Path="SelectedGameEntry.IsCached" />
+                                </MultiBinding>
+                            </MenuItem.IsEnabled>
+                        </MenuItem>
+                        <MenuItem Header="Uncache" Click="Uncache_Click">
+                            <MenuItem.IsEnabled>
+                                <MultiBinding Converter="{StaticResource CanUncacheConverter}">
+                                    <Binding Path="IsBusy" />
+                                    <Binding Path="SelectedGameEntry" />
+                                    <Binding Path="SelectedGameEntry.IsCached" />
+                                </MultiBinding>
+                            </MenuItem.IsEnabled>
+                        </MenuItem>
+                        <Separator/>
+                        <MenuItem Header="Add Game" Click="AddGame_Click" />
+                        <MenuItem Header="Edit Game" IsEnabled="{Binding SelectedGameEntry, Converter={StaticResource NotNullBooleanConverter}}" Click="EditGame_Click" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Mode=OneWay, Path=Title}" MinWidth="125" Header="Title"/>
+                    <DataGridTextColumn Binding="{Binding Path=TargetDirectory}" MinWidth="150" Header="Target Directory" />
+                    <DataGridTextColumn Binding="{Binding Path=SourcePath}" Width="*" Header="Source Path" />
+                    <DataGridTextColumn Binding="{Binding Path=IsCached, Converter={StaticResource CachedLabelConverter}}" MinWidth="75" MaxWidth="75" Header="Cached?" >
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="{x:Type DataGridCell}">
+                                <Setter Property="Background" Value="{Binding IsCached, Converter={StaticResource CachedBackgroundColorConverter}}">
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <StatusBar>
+                <StatusBarItem>
+                    <TextBlock Name="lblCursorPosition" Text="{Binding StatusText}" />
+                </StatusBarItem>
+            </StatusBar>
+        </Grid>
+
+    </Grid>
+</Window>
